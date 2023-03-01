@@ -3,10 +3,11 @@ var morgan = require('morgan')
 let cors = require('cors')
 let bodyParser = require('body-parser')
 let entries = require('./entries')
+let app = express()
 const dotenv = require('dotenv')
 
 dotenv.config()
-let app = express()
+const serverless = require('serverless-http');
 app.use(morgan('dev'))
 app.use(cors())
 app.use(bodyParser.json())
@@ -29,3 +30,4 @@ app.post('/entries', (req, res) => {
 app.listen(process.env.PORT, '0.0.0.0', () => {
     console.log(`Profile backend running on ${process.env.PORT} ...`)
 })
+module.exports.handler = serverless(app);
